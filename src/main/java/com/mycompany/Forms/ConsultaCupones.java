@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -83,7 +84,6 @@ public class ConsultaCupones extends javax.swing.JFrame {
         Guardar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        CargaMasiva = new javax.swing.JButton();
         CargaMasiva1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -140,13 +140,6 @@ public class ConsultaCupones extends javax.swing.JFrame {
 
         jLabel4.setText("Fecha de Expiración:");
 
-        CargaMasiva.setText("Carga Masiva");
-        CargaMasiva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CargaMasivaActionPerformed(evt);
-            }
-        });
-
         CargaMasiva1.setText("Carga Masiva");
         CargaMasiva1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,51 +152,42 @@ public class ConsultaCupones extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Cerrar)
-                        .addGap(39, 39, 39))
-                    .addComponent(Guardar, javax.swing.GroupLayout.Alignment.TRAILING)))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(Borrar)
-                        .addGap(40, 40, 40)
-                        .addComponent(Modificar)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addComponent(CargaMasiva1))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(38, 38, 38)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel1))
+                                        .addGap(23, 23, 23))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(51, 51, 51)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel3))
+                                        .addGap(18, 18, 18)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(Borrar)
+                                .addGap(49, 49, 49)
+                                .addComponent(Modificar)
+                                .addGap(54, 54, 54)
+                                .addComponent(CargaMasiva1)))
+                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(9, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(211, 211, 211)
-                    .addComponent(CargaMasiva)
-                    .addContainerGap(211, Short.MAX_VALUE)))
+                            .addComponent(Cerrar)
+                            .addComponent(Guardar))
+                        .addGap(0, 17, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,11 +218,6 @@ public class ConsultaCupones extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(255, 255, 255)
-                    .addComponent(CargaMasiva)
-                    .addContainerGap(255, Short.MAX_VALUE)))
         );
 
         pack();
@@ -417,16 +396,32 @@ public class ConsultaCupones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_GuardarActionPerformed
 
-        private String obtenerRuta(){
+    private String obtenerRuta(){
         JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos CSV (*.csv)", "csv");
+        
+        fileChooser.setFileFilter(filtro);
+        
         fileChooser.showOpenDialog(null);
         File archivo = fileChooser.getSelectedFile();
-        return archivo.getAbsolutePath();
+        
+       int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea  cargar el archivo: \"" + archivo.getAbsolutePath() + "\"?", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+        
+       if (respuesta == JOptionPane.YES_OPTION) {
+            return archivo.getAbsolutePath();
+        } else {
+            JOptionPane.showMessageDialog(
+                null,
+                "Selección cancelada.",
+                "Cancelado",
+                JOptionPane.WARNING_MESSAGE
+            );
+        } 
+       
+        return null;
     }
     
-    private ArrayList<Cupon> leer(String ruta){
-        
-        ArrayList<Cupon> Cupones = new ArrayList<>();
+    private void leer(String ruta){
         
         try {
             File archivo = new File(ruta);
@@ -505,17 +500,8 @@ public class ConsultaCupones extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Cupon_Nuevo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return Cupones;
     }
-    private void CargaMasivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargaMasivaActionPerformed
-
-        String ruta = obtenerRuta();
-        leer(ruta);
-        pintar_tabla();
-
-    }//GEN-LAST:event_CargaMasivaActionPerformed
-
+    
     private void CargaMasiva1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargaMasiva1ActionPerformed
         String ruta = obtenerRuta();
         leer(ruta);
@@ -525,7 +511,6 @@ public class ConsultaCupones extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Borrar;
-    private javax.swing.JButton CargaMasiva;
     private javax.swing.JButton CargaMasiva1;
     private javax.swing.JButton Cerrar;
     private javax.swing.JButton Guardar;

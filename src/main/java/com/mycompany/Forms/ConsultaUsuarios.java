@@ -1,9 +1,21 @@
 package com.mycompany.Forms;
 
 import com.mycompany.Clases.Usuario;
+import java.awt.HeadlessException;
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class ConsultaUsuarios extends javax.swing.JFrame {
 
@@ -70,6 +82,7 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         Guardar = new javax.swing.JButton();
+        CargaMasiva1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Consulta de Usuarios");
@@ -125,6 +138,13 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
             }
         });
 
+        CargaMasiva1.setText("Carga Masiva");
+        CargaMasiva1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CargaMasiva1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,26 +155,35 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Borrar)
-                                .addGap(119, 119, 119)
-                                .addComponent(Modificar))
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(41, 41, 41)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel2))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                                            .addComponent(jTextField2)
+                                            .addComponent(jTextField1))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Borrar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Modificar)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(CargaMasiva1)
+                                        .addGap(42, 42, 42))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2))
+                                .addGap(122, 122, 122)
+                                .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                                    .addComponent(jTextField2)
-                                    .addComponent(jTextField1)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Cerrar)
                             .addComponent(Guardar))
@@ -170,8 +199,9 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Borrar)
                     .addComponent(Cerrar)
-                    .addComponent(Modificar))
-                .addGap(24, 24, 24)
+                    .addComponent(Modificar)
+                    .addComponent(CargaMasiva1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -179,11 +209,11 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,9 +288,141 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_GuardarActionPerformed
 
+    private String obtenerRuta(){
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos XML (*.xml)", "xml");
+        
+        fileChooser.setFileFilter(filtro);
+        
+        fileChooser.showOpenDialog(null);
+        File archivo = fileChooser.getSelectedFile();
+        
+       int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea  cargar el archivo: \"" + archivo.getAbsolutePath() + "\"?", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+        
+       if (respuesta == JOptionPane.YES_OPTION) {
+            return archivo.getAbsolutePath();
+        } else {
+            JOptionPane.showMessageDialog(
+                null,
+                "Selección cancelada.",
+                "Cancelado",
+                JOptionPane.WARNING_MESSAGE
+            );
+        } 
+       
+        return null;
+    }
+    
+    private void leer(String ruta){
+        
+        try {
+            DocumentBuilderFactory constructor = DocumentBuilderFactory.newInstance();
+            DocumentBuilder lector = constructor.newDocumentBuilder();
+            
+            Document document = lector.parse(new File(ruta));
+            document.getDocumentElement().normalize(); //limpiar
+            
+            NodeList nodos = document.getElementsByTagName("usuario");
+            
+            for(int j = 0; j < nodos.getLength(); j++){
+                Node nodo = nodos.item(j);
+                
+                if(nodo.getNodeType() == Node.ELEMENT_NODE){
+                    
+                    try{
+                        Element elemento = (Element) nodo;
+                        String pass = elemento.getElementsByTagName("contraseña").item(0).getTextContent();
+
+                        boolean validLength = true;
+                        boolean validNumber = false;
+                        boolean validLower = false;
+                        boolean validCapital = false;
+        
+                        if(pass.length() < 6){
+                            validLength = false;
+                            continue;
+                        }
+        
+                        
+                        for(int i = 0; i < pass.length(); i++){
+                            int ascii = (int) pass.charAt(i);
+            
+                            if(ascii >= 48 && ascii <= 57){ // Rango ASCII de los dígitos.
+                                validNumber = true;
+                            }
+                        }
+                        if(!validNumber){
+                            continue;
+                        }
+        
+                        
+                        for(int i = 0; i < pass.length(); i++){ // Rango ASCII de las mayusculas.
+                            int ascii = (int) pass.charAt(i);
+            
+                            if(ascii >= 65 && ascii <= 90){
+                                validCapital = true;
+                            }
+                        }
+                        if(!validCapital){
+                            continue;
+                        }
+        
+                        
+                        for(int i = 0; i < pass.length(); i++){
+                            int ascii = (int) pass.charAt(i);
+            
+                            if(ascii >= 97 && ascii <= 122){ // Rango ASCII de las minusculas.
+                                validLower = true;
+                            }
+                        }
+                        if(!validLower){
+                            continue;
+                        }
+                
+                        
+                        if((validLength == true)&&(validNumber == true)&&(validCapital == true)&&(validLower == true)){
+                            Usuario u = new Usuario();
+                            u.nombre = elemento.getElementsByTagName("nombre").item(0).getTextContent();
+                            u.usuario = elemento.getElementsByTagName("user").item(0).getTextContent();
+                            u.password = pass;
+                            String Rol = elemento.getElementsByTagName("rol").item(0).getTextContent();
+                            
+                            if(Rol.equalsIgnoreCase("Administrador")){
+                                u.rol = "Administrador";
+                            }else if(Rol.equalsIgnoreCase("Vendedor")){
+                                u.rol = "Vendedor";
+                            }else{
+                                continue;
+                            }
+                            u.activo = true;
+                            
+                            Proyecto_Final_Log_In.usuarios.add(u);
+                            
+                        }
+                    }
+                    catch(HeadlessException e){
+                        JOptionPane.showMessageDialog(this, "Error: " + e);
+                    }
+                }
+            }
+            
+            JOptionPane.showMessageDialog(this, "Carga Masiva de Usuarios exitosa.");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ConsultaUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void CargaMasiva1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargaMasiva1ActionPerformed
+        String ruta = obtenerRuta();
+        leer(ruta);
+        pintar_tabla();
+    }//GEN-LAST:event_CargaMasiva1ActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Borrar;
+    private javax.swing.JButton CargaMasiva1;
     private javax.swing.JButton Cerrar;
     private javax.swing.JButton Guardar;
     private javax.swing.JButton Modificar;
