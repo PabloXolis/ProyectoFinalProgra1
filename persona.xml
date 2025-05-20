@@ -1,0 +1,13 @@
+<personas>
+  <persona>
+    <nombre>"Pablo"</nombre>
+    <apellido>"Solís"</apellido>
+    <edad>18</edad>
+  </persona>
+  
+  <persona>
+    <nombre>"José"</nombre>
+    <apellido>"Villeda"</apellido>
+    <edad>20</edad>
+  </persona>
+</personas>
