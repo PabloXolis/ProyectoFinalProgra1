@@ -1,9 +1,26 @@
 package com.mycompany.Forms;
 
 import com.mycompany.Clases.Libro;
+import com.mycompany.Clases.Usuario;
+import java.awt.HeadlessException;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.json.JSONArray;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.json.JSONObject;
 
 public class ConsultaLibros extends javax.swing.JFrame {
         
@@ -70,6 +87,7 @@ public class ConsultaLibros extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
+        CargaMasiva = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Consulta de Libros");
@@ -129,6 +147,13 @@ public class ConsultaLibros extends javax.swing.JFrame {
 
         jLabel6.setText("Cantidad");
 
+        CargaMasiva.setText("Carga Masiva");
+        CargaMasiva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CargaMasivaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,37 +165,43 @@ public class ConsultaLibros extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addComponent(Borrar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Modificar)
-                                .addGap(128, 128, 128))
+                                .addGap(139, 139, 139)
+                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(89, 89, 89))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField6)
-                                .addGap(89, 89, 89)))
+                                .addGap(58, 58, 58)
+                                .addComponent(Modificar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(CargaMasiva)
+                                .addGap(41, 41, 41)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(Guardar)
-                                .addGap(9, 9, 9))))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addGap(9, 9, 9)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -182,7 +213,8 @@ public class ConsultaLibros extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Modificar)
                     .addComponent(jButton1)
-                    .addComponent(Borrar))
+                    .addComponent(Borrar)
+                    .addComponent(CargaMasiva))
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -272,10 +304,153 @@ public class ConsultaLibros extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Selecciona un libro válido para modificar.");
         }
     }//GEN-LAST:event_ModificarActionPerformed
+    
+    private String obtenerRuta(){
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos Json (*.json)", "json");
+        
+        fileChooser.setFileFilter(filtro);
+        
+        fileChooser.showOpenDialog(null);
+        File archivo = fileChooser.getSelectedFile();
+        
+       int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea  cargar el archivo: \"" + archivo.getAbsolutePath() + "\"?", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+        
+       if (respuesta == JOptionPane.YES_OPTION) {
+            return archivo.getAbsolutePath();
+        } else {
+            JOptionPane.showMessageDialog(
+                null,
+                "Selección cancelada.",
+                "Cancelado",
+                JOptionPane.WARNING_MESSAGE
+            );
+        } 
+       
+        return null;
+    }
+    
+    private void leer(String ruta){
+        
+        try {
+            // Leyendo todo el contenido del archivo como String
+            String contenido = new String(Files.readAllBytes(Paths.get(ruta)));
+            
+            // Creando el objeto JSONObject a partir del String
+            JSONObject json = new JSONObject(contenido);
+            
+            // Obtener datos del JSON
+            JSONArray usuarios = json.getJSONArray("Usuarios");
+
+            for (int i = 0; i < usuarios.length(); i++) {
+                JSONObject usuario = usuarios.getJSONObject(i);
+                String titulo = usuario.getString("titulo");
+                int autor = usuario.getInt("autor");
+                int precio = usuario.getInt("precio");
+                int cantidad = usuario.getInt("cantidad");
+                int genero = usuario.getInt("genero");
+                System.out.println("Título: " + titulo + ", Autor: " + autor + ", Precio: " + precio + ", Cantidad: " + cantidad + ", Genero: " + genero);
+            }
+            
+            for(int j = 0; j < nodos.getLength(); j++){
+                Node nodo = nodos.item(j);
+                
+                if(nodo.getNodeType() == Node.ELEMENT_NODE){
+                    
+                    try{
+                        Element elemento = (Element) nodo;
+                        String pass = elemento.getElementsByTagName("contraseña").item(0).getTextContent();
+
+                        boolean validLength = true;
+                        boolean validNumber = false;
+                        boolean validLower = false;
+                        boolean validCapital = false;
+        
+                        if(pass.length() < 6){
+                            validLength = false;
+                            continue;
+                        }
+        
+                        
+                        for(int i = 0; i < pass.length(); i++){
+                            int ascii = (int) pass.charAt(i);
+            
+                            if(ascii >= 48 && ascii <= 57){ // Rango ASCII de los dígitos.
+                                validNumber = true;
+                            }
+                        }
+                        if(!validNumber){
+                            continue;
+                        }
+        
+                        
+                        for(int i = 0; i < pass.length(); i++){ // Rango ASCII de las mayusculas.
+                            int ascii = (int) pass.charAt(i);
+            
+                            if(ascii >= 65 && ascii <= 90){
+                                validCapital = true;
+                            }
+                        }
+                        if(!validCapital){
+                            continue;
+                        }
+        
+                        
+                        for(int i = 0; i < pass.length(); i++){
+                            int ascii = (int) pass.charAt(i);
+            
+                            if(ascii >= 97 && ascii <= 122){ // Rango ASCII de las minusculas.
+                                validLower = true;
+                            }
+                        }
+                        if(!validLower){
+                            continue;
+                        }
+                
+                        
+                        if((validLength == true)&&(validNumber == true)&&(validCapital == true)&&(validLower == true)){
+                            Usuario u = new Usuario();
+                            u.nombre = elemento.getElementsByTagName("nombre").item(0).getTextContent();
+                            u.usuario = elemento.getElementsByTagName("user").item(0).getTextContent();
+                            u.password = pass;
+                            String Rol = elemento.getElementsByTagName("rol").item(0).getTextContent();
+                            
+                            if(Rol.equalsIgnoreCase("Administrador")){
+                                u.rol = "Administrador";
+                            }else if(Rol.equalsIgnoreCase("Vendedor")){
+                                u.rol = "Vendedor";
+                            }else{
+                                continue;
+                            }
+                            u.activo = true;
+                            
+                            Proyecto_Final_Log_In.usuarios.add(u);
+                            
+                        }
+                    }
+                    catch(HeadlessException e){
+                        JOptionPane.showMessageDialog(this, "Error: " + e);
+                    }
+                }
+            }
+            
+            JOptionPane.showMessageDialog(this, "Carga Masiva de Usuarios exitosa.");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ConsultaUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void CargaMasivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargaMasivaActionPerformed
+        String ruta = obtenerRuta();
+        leer(ruta);
+        pintar_tabla();
+    }//GEN-LAST:event_CargaMasivaActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Borrar;
+    private javax.swing.JButton CargaMasiva;
     private javax.swing.JButton Guardar;
     private javax.swing.JButton Modificar;
     private javax.swing.JButton jButton1;

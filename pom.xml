@@ -11,5 +11,15 @@
         <maven.compiler.target>21</maven.compiler.target>
         <exec.mainClass>com.mycompany.Forms.Proyecto_Final_Log_In</exec.mainClass>
     </properties>
+    
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20250107</version>
+        </dependency>
+    </dependencies>
+
     <name>Proyecto_Final_Lectura_XML</name>
 </project>
