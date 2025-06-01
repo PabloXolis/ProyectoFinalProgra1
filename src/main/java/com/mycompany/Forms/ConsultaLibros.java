@@ -1,8 +1,6 @@
 package com.mycompany.Forms;
 
 import com.mycompany.Clases.Libro;
-import com.mycompany.Clases.Usuario;
-import java.awt.HeadlessException;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,13 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import org.json.JSONArray;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.json.JSONObject;
 
 public class ConsultaLibros extends javax.swing.JFrame {
@@ -340,101 +332,53 @@ public class ConsultaLibros extends javax.swing.JFrame {
             JSONObject json = new JSONObject(contenido);
             
             // Obtener datos del JSON
-            JSONArray usuarios = json.getJSONArray("Usuarios");
-
-            for (int i = 0; i < usuarios.length(); i++) {
-                JSONObject usuario = usuarios.getJSONObject(i);
-                String titulo = usuario.getString("titulo");
-                int autor = usuario.getInt("autor");
-                int precio = usuario.getInt("precio");
-                int cantidad = usuario.getInt("cantidad");
-                int genero = usuario.getInt("genero");
-                System.out.println("Título: " + titulo + ", Autor: " + autor + ", Precio: " + precio + ", Cantidad: " + cantidad + ", Genero: " + genero);
-            }
+            JSONArray libros = json.getJSONArray("Libros");
             
-            for(int j = 0; j < nodos.getLength(); j++){
-                Node nodo = nodos.item(j);
+            for (int i = 0; i < libros.length(); i++) {
+                JSONObject libro = libros.getJSONObject(i);
                 
-                if(nodo.getNodeType() == Node.ELEMENT_NODE){
-                    
-                    try{
-                        Element elemento = (Element) nodo;
-                        String pass = elemento.getElementsByTagName("contraseña").item(0).getTextContent();
-
-                        boolean validLength = true;
-                        boolean validNumber = false;
-                        boolean validLower = false;
-                        boolean validCapital = false;
-        
-                        if(pass.length() < 6){
-                            validLength = false;
-                            continue;
-                        }
-        
-                        
-                        for(int i = 0; i < pass.length(); i++){
-                            int ascii = (int) pass.charAt(i);
-            
-                            if(ascii >= 48 && ascii <= 57){ // Rango ASCII de los dígitos.
-                                validNumber = true;
-                            }
-                        }
-                        if(!validNumber){
-                            continue;
-                        }
-        
-                        
-                        for(int i = 0; i < pass.length(); i++){ // Rango ASCII de las mayusculas.
-                            int ascii = (int) pass.charAt(i);
-            
-                            if(ascii >= 65 && ascii <= 90){
-                                validCapital = true;
-                            }
-                        }
-                        if(!validCapital){
-                            continue;
-                        }
-        
-                        
-                        for(int i = 0; i < pass.length(); i++){
-                            int ascii = (int) pass.charAt(i);
-            
-                            if(ascii >= 97 && ascii <= 122){ // Rango ASCII de las minusculas.
-                                validLower = true;
-                            }
-                        }
-                        if(!validLower){
-                            continue;
-                        }
+                String titulo = libro.getString("titulo");
+                String autor = libro.getString("autor");
+                double precioCompra = libro.getDouble("precio compra");
+                double precioVenta = libro.getDouble("precio venta");
+                int cantidad = libro.getInt("cantidad");
+                String genero = libro.getString("genero");
                 
-                        
-                        if((validLength == true)&&(validNumber == true)&&(validCapital == true)&&(validLower == true)){
-                            Usuario u = new Usuario();
-                            u.nombre = elemento.getElementsByTagName("nombre").item(0).getTextContent();
-                            u.usuario = elemento.getElementsByTagName("user").item(0).getTextContent();
-                            u.password = pass;
-                            String Rol = elemento.getElementsByTagName("rol").item(0).getTextContent();
-                            
-                            if(Rol.equalsIgnoreCase("Administrador")){
-                                u.rol = "Administrador";
-                            }else if(Rol.equalsIgnoreCase("Vendedor")){
-                                u.rol = "Vendedor";
-                            }else{
-                                continue;
-                            }
-                            u.activo = true;
-                            
-                            Proyecto_Final_Log_In.usuarios.add(u);
-                            
-                        }
-                    }
-                    catch(HeadlessException e){
-                        JOptionPane.showMessageDialog(this, "Error: " + e);
-                    }
+                
+                
+                if (titulo.trim().isEmpty() || autor.trim().isEmpty() || genero.trim().isEmpty()){
+                    continue;
                 }
+                
+                try {
+                    if (precioCompra <= 0 || precioVenta <= 0){
+                        continue;
+                    }
+                } catch (NumberFormatException e) {
+                     continue;
+                }
+
+                try{
+                    if (cantidad <= 0) {
+                         continue;
+                    }
+                } catch (NumberFormatException e) {
+                     continue;
+                }
+                
+                Libro l = new Libro();
+                l.titulo = titulo;
+                l.autor = autor;
+                l.precio_compra = precioCompra;
+                l.precio_venta = precioVenta;
+                l.genero = genero;
+                l.cantidad = cantidad;
+                l.activo = true;
+
+                Proyecto_Final_Log_In.libros.add(l);
             }
             
-            JOptionPane.showMessageDialog(this, "Carga Masiva de Usuarios exitosa.");
+            JOptionPane.showMessageDialog(this, "Carga Masiva de Libros exitosa.");
             
         } catch (Exception ex) {
             Logger.getLogger(ConsultaUsuarios.class.getName()).log(Level.SEVERE, null, ex);
