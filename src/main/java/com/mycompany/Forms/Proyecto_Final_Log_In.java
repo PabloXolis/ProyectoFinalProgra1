@@ -66,7 +66,7 @@ public class Proyecto_Final_Log_In {
             Libro defBook2 = new Libro();
             //Añadiendo valores de libro por defecto de "defBook2" una vez se inicie el programa.
             defBook2.setTitulo("2Default Book");
-            defBook2.setAutor("Autor");
+            defBook2.setAutor("Autor2");
             defBook2.setPrecio_compra(120.0);
             defBook2.setPrecio_venta(200.0);
             defBook2.setGenero("Terror");
