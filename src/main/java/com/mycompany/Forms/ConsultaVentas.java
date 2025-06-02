@@ -173,7 +173,7 @@ public class ConsultaVentas extends javax.swing.JFrame {
             // Filtrando libros activos
             ventasActivas = new java.util.ArrayList<>();
             for (Venta v : Proyecto_Final_Log_In.ventas) {
-                if (v.activo) {
+                if (v.isActivo()) {
                     ventasActivas.add(v);
                 }
             }
@@ -190,8 +190,8 @@ public class ConsultaVentas extends javax.swing.JFrame {
             ); 
             
             for (Venta v : ventasActivas) {
-                String fechaHoraFormateada = formatoFecha.format(v.fechaYHora.getTime());
-                Object[] fila = {v.nombre, v.nit, v.direccion, v.total, v.totalSinIVA, v.vendedor, fechaHoraFormateada};
+                String fechaHoraFormateada = formatoFecha.format(v.getFechaYHora().getTime());
+                Object[] fila = {v.getNombre(), v.getNit(), v.getDireccion(), v.getTotal(), v.getTotalSinIVA(), v.getVendedor(), fechaHoraFormateada};
                 t.addRow(fila);
             }
         }
@@ -218,7 +218,7 @@ public class ConsultaVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void EliminarSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarSeleccionActionPerformed
-        if (Proyecto_Final_Log_In.usuarioActual.rol.equals("Administrador")) {
+        if (Proyecto_Final_Log_In.usuarioActual.getRol().equals("Administrador")) {
             Proyecto_Final_Log_In.itemVentaSeleccionada = jTable1.getSelectedRow();
 
             if(Proyecto_Final_Log_In.itemVentaSeleccionada >= 0){
@@ -226,7 +226,7 @@ public class ConsultaVentas extends javax.swing.JFrame {
 
                     ventaSelected = ventasActivas.get(Proyecto_Final_Log_In.itemVentaSeleccionada);
                     //Proyecto_Final_Log_In.libros.remove(eliminar);  Ya no se elmina de la lista de objetos de tipo Libro.
-                    ventaSelected.activo = false;
+                    ventaSelected.setActivo(false);
                     pintar_tabla();
                 }
             }

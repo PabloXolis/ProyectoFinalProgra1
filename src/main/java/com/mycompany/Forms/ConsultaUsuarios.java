@@ -41,7 +41,7 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
         // Filtrando usuarios activos
         usuariosActivos = new java.util.ArrayList<>();
         for (Usuario u : Proyecto_Final_Log_In.usuarios) {
-            if (u.activo) {
+            if (u.isActivo()) {
                 usuariosActivos.add(u);
             }
         }
@@ -54,7 +54,7 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
         TableModel tabla = jTable1.getModel();
         
         for (Usuario u : usuariosActivos) {
-            Object[] fila = {u.nombre, u.usuario, u.password, u.rol};
+            Object[] fila = {u.getNombre(), u.getUsuario(), u.getPassword(), u.getRol()};
             t.addRow(fila);
         }
     }
@@ -237,7 +237,7 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
                 
                 usuario = usuariosActivos.get(eliminar);
                 //Proyecto_Final_Log_In.usuarios.remove(eliminar);  Ya no se elmina de la lista de objetos de tipo Usuario.
-                usuario.activo = false;
+                usuario.setActivo(false);
                 pintar_tabla();
             }
         }
@@ -250,11 +250,11 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
  
         if(jTable1.getSelectedRow() >= 0 ){
             usuario = usuariosActivos.get(jTable1.getSelectedRow());
-            jTextField1.setText(usuario.nombre);
-            jTextField2.setText(usuario.usuario);
-            jTextField3.setText(usuario.password);
+            jTextField1.setText(usuario.getNombre());
+            jTextField2.setText(usuario.getUsuario());
+            jTextField3.setText(usuario.getPassword());
 
-            if(usuario.rol.equals("Administrador")){
+            if(usuario.getRol().equals("Administrador")){
                 jComboBox1.setSelectedIndex(0);
             }
             else{
@@ -270,18 +270,18 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         
         if (usuario != null) {
-            usuario.nombre = jTextField1.getText();
-            usuario.password = jTextField3.getText();
+            usuario.setNombre(jTextField1.getText());
+            usuario.setPassword(jTextField3.getText());
 
             String Rol = jComboBox1.getSelectedItem().toString();
 
             if(Rol.equals("Administrador")){
-                usuario.rol = Rol;
+                usuario.setRol(Rol);
             }else{
-                usuario.rol = Rol;
+                usuario.setRol(Rol);
             }
 
-            usuario.usuario = jTextField2.getText();
+            usuario.setUsuario(jTextField2.getText());
             pintar_tabla();
 
             JOptionPane.showMessageDialog(this, "Usuario modificado exitosamente.");
@@ -382,19 +382,19 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
                         
                         if((validLength == true)&&(validNumber == true)&&(validCapital == true)&&(validLower == true)){
                             Usuario u = new Usuario();
-                            u.nombre = elemento.getElementsByTagName("nombre").item(0).getTextContent();
-                            u.usuario = elemento.getElementsByTagName("user").item(0).getTextContent();
-                            u.password = pass;
+                            u.setNombre(elemento.getElementsByTagName("nombre").item(0).getTextContent());
+                            u.setUsuario(elemento.getElementsByTagName("user").item(0).getTextContent());
+                            u.setPassword(pass);
                             String Rol = elemento.getElementsByTagName("rol").item(0).getTextContent();
                             
                             if(Rol.equalsIgnoreCase("Administrador")){
-                                u.rol = "Administrador";
+                                u.setRol("Administrador");
                             }else if(Rol.equalsIgnoreCase("Vendedor")){
-                                u.rol = "Vendedor";
+                                u.setRol("Vendedor");
                             }else{
                                 continue;
                             }
-                            u.activo = true;
+                            u.setActivo(true);
                             
                             Proyecto_Final_Log_In.usuarios.add(u);
                             

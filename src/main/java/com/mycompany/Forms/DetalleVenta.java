@@ -128,8 +128,8 @@ public class DetalleVenta extends javax.swing.JFrame {
             
 
             if(Proyecto_Final_Log_In.itemVentaSeleccionada >= 0){
-                for (Libro_Vendido v : venta.librosVendidos) {
-                    Object[] fila = {v.libro, v.cantidad, v.subtotal, v.subtotal/1.12};
+                for (Libro_Vendido v : venta.getLibrosVendidos()) {
+                    Object[] fila = {v.getLibro(), v.getCantidad(), v.getSubtotal(), v.getSubtotal()/1.12};
                     t.addRow(fila);
                 }    
             }

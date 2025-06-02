@@ -224,13 +224,13 @@ public class Libro_Nuevo extends javax.swing.JFrame {
             }
                 
             Libro l = new Libro();
-            l.titulo = jTextField1.getText();
-            l.autor = jTextField2.getText();
-            l.precio_compra = pCompra;
-            l.precio_venta = pVenta;
-            l.genero = jTextField5.getText();
-            l.cantidad = quantity;
-            l.activo = true;
+            l.setTitulo(jTextField1.getText());
+            l.setAutor(jTextField2.getText());
+            l.setPrecio_compra(pCompra);
+            l.setPrecio_venta(pVenta);
+            l.setGenero(jTextField5.getText());
+            l.setCantidad(quantity);
+            l.setActivo(true);
             
             Proyecto_Final_Log_In.libros.add(l);
             JOptionPane.showMessageDialog(this, "Nuevo libro creado con éxito.");

@@ -177,7 +177,7 @@ public class Cupon_Nuevo extends javax.swing.JFrame {
                     boolean minuscula = false;
                     
                     for(Cupon c : Proyecto_Final_Log_In.cupones){
-                        if(code.equals(c.codigo)){
+                        if(code.equals(c.getCodigo())){
                             validExistente = true;
                             JOptionPane.showMessageDialog(this, "Error: Ingresaste un código ya existente.");
                         }
@@ -249,11 +249,11 @@ public class Cupon_Nuevo extends javax.swing.JFrame {
                         
                         if(Tipo.equals("Porcentaje")){
                             if (descuento > 0) {
-                                c.codigo = code;
-                                c.tipo = Tipo;
-                                c.valor_descuento = descuento;
-                                c.activo = true;
-                                c.expira = fechaFormateada;
+                                c.setCodigo(code);
+                                c.setTipo(Tipo);
+                                c.setValor_descuento(descuento);
+                                c.setActivo(true);
+                                c.setExpira(fechaFormateada);
 
                                 Proyecto_Final_Log_In.cupones.add(c);
                                 JOptionPane.showMessageDialog(this, "Nuevo cupón creado con éxito.");
@@ -264,11 +264,11 @@ public class Cupon_Nuevo extends javax.swing.JFrame {
                         }
                         else{ // Monto
                             if (descuento > 0) {
-                                c.codigo = code;
-                                c.tipo = Tipo;
-                                c.valor_descuento = descuento;
-                                c.activo = true;
-                                c.expira = fechaFormateada;
+                                c.setCodigo(code);
+                                c.setTipo(Tipo);
+                                c.setValor_descuento(descuento);
+                                c.setActivo(true);
+                                c.setExpira(fechaFormateada);
 
                                 Proyecto_Final_Log_In.cupones.add(c);
                                 JOptionPane.showMessageDialog(this, "Nuevo cupón creado con éxito.");
@@ -318,14 +318,14 @@ public class Cupon_Nuevo extends javax.swing.JFrame {
                 
                 Cupon c = new Cupon();
                 
-                c.codigo = datosSeparadosCupon[0];
-                c.valor_descuento = Double.parseDouble(datosSeparadosCupon[1]);
+                c.setCodigo(datosSeparadosCupon[0]);
+                c.setValor_descuento(Double.parseDouble(datosSeparadosCupon[1]));
                 
                 if (datosSeparadosCupon[2].equalsIgnoreCase("Porcentaje")){
-                    c.tipo = "Porcentaje";
+                    c.setTipo("Porcentaje");
                 }
                 else{
-                    c.tipo = "Monto";
+                    c.setTipo("Monto");
                 }
                 
                 
@@ -361,8 +361,8 @@ public class Cupon_Nuevo extends javax.swing.JFrame {
 
                 String fechaFormateada = formatoVisible.format(fechaParseada);
                 
-                c.expira = fechaFormateada;
-                c.activo = true;
+                c.setExpira(fechaFormateada);
+                c.setActivo(true);
                 
                 Proyecto_Final_Log_In.cupones.add(c);
                 

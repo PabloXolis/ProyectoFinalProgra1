@@ -107,13 +107,13 @@ public class Login extends javax.swing.JFrame {
                 boolean existe = false;
         
                 for(Usuario u : Proyecto_Final_Log_In.usuarios){
-                    if(u.usuario.equals(user) && u.password.equals(pass) && u.activo){
+                    if(u.getUsuario().equals(user) && u.getPassword().equals(pass) && u.isActivo()){
                         existe = true;
                         
                         //Inicializando el usuario actual, el cual indica el usuario que está accediendo.
                         Proyecto_Final_Log_In.usuarioActual = new Usuario();
                         Proyecto_Final_Log_In.usuarioActual = u;
-                        if(u.rol.equals("Administrador")){
+                        if(u.getRol().equals("Administrador")){
                             VentanaAdministrador window = new VentanaAdministrador();
                             window.setVisible(true);
                         }

@@ -162,12 +162,12 @@ public class Proveedor_Nuevo extends javax.swing.JFrame {
                
                 Proveedor p = new Proveedor();
 
-                p.nombre = nombre;
-                p.nit = nit;
-                p.direccion = direccion;
-                p.telefono = telefono;
+                p.setNombre(nombre);
+                p.setNit(nit);
+                p.setDireccion(direccion);
+                p.setTelefono(telefono);
                 
-                p.activo = true;
+                p.setActivo(true);
 
                 Proyecto_Final_Log_In.proveedores.add(p);
                 JOptionPane.showMessageDialog(this, "Nuevo proveedor creado con éxito.");

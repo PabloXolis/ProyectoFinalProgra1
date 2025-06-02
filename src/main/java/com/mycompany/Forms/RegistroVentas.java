@@ -33,7 +33,7 @@ public class RegistroVentas extends javax.swing.JFrame {
         
         jComboBox1.removeAllItems(); // Inicializando el JcomboBox
         for (int i = 0; i <  Proyecto_Final_Log_In.libros.size(); i++) {
-            jComboBox1.addItem(String.valueOf(Proyecto_Final_Log_In.libros.get(i).titulo));
+            jComboBox1.addItem(String.valueOf(Proyecto_Final_Log_In.libros.get(i).getTitulo()));
         }
     }
 
@@ -329,7 +329,7 @@ public class RegistroVentas extends javax.swing.JFrame {
             TableModel tabla = jTable1.getModel();
 
             for (Libro_Vendido l : librosSeleccionados) {
-                Object[] fila = {l.libro, l.cantidad, l.subtotal};
+                Object[] fila = {l.getLibro(), l.getCantidad(), l.getSubtotal()};
                 t.addRow(fila);
             }
         }
@@ -382,29 +382,29 @@ public class RegistroVentas extends javax.swing.JFrame {
                 if (jTable1.getRowCount() > 0){
                     Venta venta = new Venta();
 
-                    venta.total = total;
-                    venta.nit = nit;
-                    venta.nombre = jTextField2.getText();
-                    venta.direccion = jTextField3.getText();
-                    venta.librosVendidos = librosSeleccionados;
-                    venta.totalSinIVA = venta.total / 1.12;
-                    venta.vendedor = Proyecto_Final_Log_In.usuarioActual.nombre;
+                    venta.setTotal(total);
+                    venta.setNit(nit);
+                    venta.setNombre(jTextField2.getText());
+                    venta.setDireccion(jTextField3.getText());
+                    venta.setLibrosVendidos(librosSeleccionados);
+                    venta.setTotalSinIVA(venta.getTotal() / 1.12);
+                    venta.setVendedor(Proyecto_Final_Log_In.usuarioActual.getNombre());
 
                     SimpleDateFormat formatoFecha = new SimpleDateFormat(
                         "EEEE, d 'de' MMMM 'de' yyyy, HH:mm:ss",
                         Locale.of("es", "ES")
                     );
-                    String fechaHoraFormateada = formatoFecha.format(venta.fechaYHora.getTime());
+                    String fechaHoraFormateada = formatoFecha.format(venta.getFechaYHora().getTime());
 
-                    venta.activo = true;
+                    venta.setActivo(true);
 
                     Proyecto_Final_Log_In.ventas.add(venta);
 
-                    JOptionPane.showMessageDialog(this, "Venta realizada por " + venta.vendedor + " con éxito, con fecha y hora: " + fechaHoraFormateada + "."
-                                                        + "\nCliente: " + venta.nombre
-                                                        + "\nNIT: " + venta.nit
-                                                        + "\nTotal sin IVA: " + venta.totalSinIVA
-                                                        + "\nTotal con IVA: " + venta.total);
+                    JOptionPane.showMessageDialog(this, "Venta realizada por " + venta.getVendedor() + " con éxito, con fecha y hora: " + fechaHoraFormateada + "."
+                                                        + "\nCliente: " + venta.getNombre()
+                                                        + "\nNIT: " + venta.getNit()
+                                                        + "\nTotal sin IVA: " + venta.getTotalSinIVA()
+                                                        + "\nTotal con IVA: " + venta.getTotal());
                     
                     //Limpiando los campos de texto.
                     Stream.of(jTextField1, jTextField2, jTextField3, jTextField4)
@@ -451,15 +451,15 @@ public class RegistroVentas extends javax.swing.JFrame {
                 if (cantidad <= 0) {
                     throw new IllegalArgumentException("La cantidad debe ser un valor positivo y no igual a cero.");
                 }
-                else if (cantidad > libro.cantidad){
-                    JOptionPane.showMessageDialog(this, "La cantidad elegida sobrepasa a la que se tiene en existencia del libro " + libro.titulo);
+                else if (cantidad > libro.getCantidad()){
+                    JOptionPane.showMessageDialog(this, "La cantidad elegida sobrepasa a la que se tiene en existencia del libro " + libro.getTitulo());
                 } else {
                     Libro_Vendido lvendido = new Libro_Vendido();
-                    lvendido.cantidad = cantidad;
-                    lvendido.libro = libro.titulo;
-                    lvendido.subtotal = cantidad * libro.precio_venta;
+                    lvendido.setCantidad(cantidad);
+                    lvendido.setLibro(libro.getTitulo());
+                    lvendido.setSubtotal(cantidad * libro.getPrecio_venta());
                     
-                    total += lvendido.subtotal;
+                    total += lvendido.getSubtotal();
                     jLabel2.setText(String.valueOf(total));
                     
                     librosSeleccionados.add(lvendido);
@@ -482,7 +482,7 @@ public class RegistroVentas extends javax.swing.JFrame {
 
         if(eliminar >= 0){
             if(JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas eliminar el libro seleccionado?") == 0){
-                total -= librosSeleccionados.get(eliminar).subtotal;
+                total -= librosSeleccionados.get(eliminar).getSubtotal();
                 jLabel2.setText(String.valueOf(total));
                 librosSeleccionados.remove(eliminar);
                 pintar_tabla();

@@ -217,16 +217,16 @@ public class Usuario_Nuevo extends javax.swing.JFrame {
                 
                         if((validLength == true)&&(validNumber == true)&&(validCapital == true)&&(validLower == true)){
                             Usuario u = new Usuario();
-                            u.nombre = jTextField1.getText();
-                            u.usuario = jTextField3.getText();
-                            u.password = pass;
+                            u.setNombre(jTextField1.getText());
+                            u.setUsuario(jTextField3.getText());
+                            u.setPassword(pass);
                             String Rol = jComboBox1.getSelectedItem().toString();
                             if(Rol.equals("Administrador")){
-                                u.rol = Rol;
+                                u.setRol(Rol);
                             }else{
-                                u.rol = Rol;
+                                u.setRol(Rol);
                             }
-                            u.activo = true;
+                            u.setActivo(true);
                             
                             Proyecto_Final_Log_In.usuarios.add(u);
                             JOptionPane.showMessageDialog(this, "Nuevo usuario creado con éxito.");

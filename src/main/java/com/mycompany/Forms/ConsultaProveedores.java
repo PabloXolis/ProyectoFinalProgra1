@@ -26,7 +26,7 @@ public class ConsultaProveedores extends javax.swing.JFrame {
         // Filtrando libros activos
         proveedoresActivos = new java.util.ArrayList<>();
         for (Proveedor l : Proyecto_Final_Log_In.proveedores) {
-            if (l.activo) {
+            if (l.isActivo()) {
                 proveedoresActivos.add(l);
             }
         }
@@ -39,7 +39,7 @@ public class ConsultaProveedores extends javax.swing.JFrame {
         TableModel tabla = jTable1.getModel();
         
         for (Proveedor l : proveedoresActivos) {
-            Object[] fila = {l.nombre, l.nit, l.direccion, l.telefono};
+            Object[] fila = {l.getNombre(), l.getNit(), l.getDireccion(), l.getTelefono()};
             t.addRow(fila);
         }
     }
@@ -204,10 +204,10 @@ public class ConsultaProveedores extends javax.swing.JFrame {
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
 
         if (proveedor != null) {
-            proveedor.nombre = jTextField1.getText();
-            proveedor.nit = jTextField2.getText();
-            proveedor.direccion = jTextField3.getText();
-            proveedor.telefono = jTextField4.getText();
+            proveedor.setNombre(jTextField1.getText());
+            proveedor.setNit(jTextField2.getText());
+            proveedor.setDireccion(jTextField3.getText());
+            proveedor.setTelefono(jTextField4.getText());
            
             pintar_tabla();
 
@@ -224,7 +224,7 @@ public class ConsultaProveedores extends javax.swing.JFrame {
 
                 proveedor = proveedoresActivos.get(eliminar);
                 //Proyecto_Final_Log_In.libros.remove(eliminar);  Ya no se elmina de la lista de objetos de tipo Libro.
-                proveedor.activo = false;
+                proveedor.setActivo(false);
                 pintar_tabla();
             }
         }
@@ -237,10 +237,10 @@ public class ConsultaProveedores extends javax.swing.JFrame {
 
         if(jTable1.getSelectedRow() >= 0 ){
             proveedor = proveedoresActivos.get(jTable1.getSelectedRow());
-            jTextField1.setText(proveedor.nombre);
-            jTextField2.setText(proveedor.nit);
-            jTextField3.setText(proveedor.direccion);
-            jTextField4.setText(proveedor.telefono);
+            jTextField1.setText(proveedor.getNombre());
+            jTextField2.setText(proveedor.getNit());
+            jTextField3.setText(proveedor.getDireccion());
+            jTextField4.setText(proveedor.getTelefono());
             
         }
         else{

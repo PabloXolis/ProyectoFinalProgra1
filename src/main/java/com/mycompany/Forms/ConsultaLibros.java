@@ -34,7 +34,7 @@ public class ConsultaLibros extends javax.swing.JFrame {
         // Filtrando libros activos
         librosActivos = new java.util.ArrayList<>();
         for (Libro l : Proyecto_Final_Log_In.libros) {
-            if (l.activo) {
+            if (l.isActivo()) {
                 librosActivos.add(l);
             }
         }
@@ -47,7 +47,7 @@ public class ConsultaLibros extends javax.swing.JFrame {
         TableModel tabla = jTable1.getModel();
         
         for (Libro l : librosActivos) {
-            Object[] fila = {l.titulo, l.autor, l.precio_compra, l.precio_venta, l.genero, l.cantidad};
+            Object[] fila = {l.getTitulo(), l.getAutor(), l.getPrecio_compra(), l.getPrecio_venta(), l.getGenero(), l.getCantidad()};
             t.addRow(fila);
         }
     }
@@ -249,12 +249,12 @@ public class ConsultaLibros extends javax.swing.JFrame {
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
 
         if (libro != null) {
-            libro.titulo = jTextField1.getText();
-            libro.autor = jTextField2.getText();
-            libro.precio_compra = Double.parseDouble(jTextField3.getText());
-            libro.precio_venta = Double.parseDouble(jTextField4.getText());
-            libro.genero = jTextField5.getText();
-            libro.cantidad= Integer.parseInt(jTextField6.getText());
+            libro.setTitulo(jTextField1.getText());
+            libro.setAutor(jTextField2.getText());
+            libro.setPrecio_compra(Double.parseDouble(jTextField3.getText()));
+            libro.setPrecio_venta(Double.parseDouble(jTextField4.getText()));
+            libro.setGenero(jTextField5.getText());
+            libro.setCantidad(Integer.parseInt(jTextField6.getText()));
            
             pintar_tabla();
 
@@ -271,7 +271,7 @@ public class ConsultaLibros extends javax.swing.JFrame {
 
                 libro = librosActivos.get(eliminar);
                 //Proyecto_Final_Log_In.libros.remove(eliminar);  Ya no se elmina de la lista de objetos de tipo Libro.
-                libro.activo = false;
+                libro.setActivo(false);
                 pintar_tabla();
             }
         }
@@ -284,12 +284,12 @@ public class ConsultaLibros extends javax.swing.JFrame {
 
         if(jTable1.getSelectedRow() >= 0 ){
             libro = librosActivos.get(jTable1.getSelectedRow());
-            jTextField1.setText(libro.titulo);
-            jTextField2.setText(libro.autor);
-            jTextField3.setText(String.valueOf(libro.precio_compra));
-            jTextField4.setText(String.valueOf(libro.precio_venta));
-            jTextField5.setText(libro.genero);
-            jTextField6.setText(String.valueOf(libro.cantidad));
+            jTextField1.setText(libro.getTitulo());
+            jTextField2.setText(libro.getAutor());
+            jTextField3.setText(String.valueOf(libro.getPrecio_compra()));
+            jTextField4.setText(String.valueOf(libro.getPrecio_venta()));
+            jTextField5.setText(libro.getGenero());
+            jTextField6.setText(String.valueOf(libro.getCantidad()));
             
         }
         else{
@@ -367,13 +367,13 @@ public class ConsultaLibros extends javax.swing.JFrame {
                 }
                 
                 Libro l = new Libro();
-                l.titulo = titulo;
-                l.autor = autor;
-                l.precio_compra = precioCompra;
-                l.precio_venta = precioVenta;
-                l.genero = genero;
-                l.cantidad = cantidad;
-                l.activo = true;
+                l.setTitulo(titulo);
+                l.setAutor(autor);
+                l.setPrecio_compra(precioCompra);
+                l.setPrecio_venta(precioVenta);
+                l.setGenero(genero);
+                l.setCantidad(cantidad);
+                l.setActivo(true);
 
                 Proyecto_Final_Log_In.libros.add(l);
             }

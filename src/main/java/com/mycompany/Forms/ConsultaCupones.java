@@ -43,7 +43,7 @@ public class ConsultaCupones extends javax.swing.JFrame {
         // Filtrando cupones activos
         cuponesActivos = new java.util.ArrayList<>();
         for (Cupon c : Proyecto_Final_Log_In.cupones) {
-            if (c.activo) {
+            if (c.isActivo()) {
                 cuponesActivos.add(c);
             }
         }
@@ -56,7 +56,7 @@ public class ConsultaCupones extends javax.swing.JFrame {
         TableModel tabla = jTable1.getModel();
         
         for (Cupon c : cuponesActivos) {
-            Object[] fila = {c.codigo, c.tipo, c.valor_descuento, c.expira};
+            Object[] fila = {c.getCodigo(), c.getTipo(), c.getValor_descuento(), c.getExpira()};
             t.addRow(fila);
         }
     }
@@ -236,7 +236,7 @@ public class ConsultaCupones extends javax.swing.JFrame {
                 
                 cupon = cuponesActivos.get(eliminar);
                 //Proyecto_Final_Log_In.cupones.remove(eliminar);  Ya no se elmina de la lista de objetos de tipo Cupon.
-                cupon.activo = false;
+                cupon.setActivo(false);
                 pintar_tabla();
             }
         }
@@ -249,11 +249,11 @@ public class ConsultaCupones extends javax.swing.JFrame {
  
         if(jTable1.getSelectedRow() >= 0 ){
             cupon = cuponesActivos.get(jTable1.getSelectedRow());
-            jTextField1.setText(cupon.codigo);
-            jTextField2.setText(String.valueOf(cupon.valor_descuento));
-            jTextField3.setText(cupon.expira);
+            jTextField1.setText(cupon.getCodigo());
+            jTextField2.setText(String.valueOf(cupon.getValor_descuento()));
+            jTextField3.setText(cupon.getExpira());
             
-            if(cupon.tipo.equals("Porcentaje")){
+            if(cupon.getTipo().equals("Porcentaje")){
                 jComboBox1.setSelectedIndex(0);
             }
             else{
@@ -281,10 +281,10 @@ public class ConsultaCupones extends javax.swing.JFrame {
                         boolean minuscula = false;
 
                         for(Cupon c : Proyecto_Final_Log_In.cupones){
-                            if(code.equals(cupon.codigo)){
+                            if(code.equals(cupon.getCodigo())){
                                 validExistente = false;
                             }
-                            else if(code.equals(c.codigo)){
+                            else if(code.equals(c.getCodigo())){
                                 validExistente = true;
                                 JOptionPane.showMessageDialog(this, "Error: Ingresaste un código ya existente.");
                             }
@@ -353,11 +353,11 @@ public class ConsultaCupones extends javax.swing.JFrame {
                             
                             if(tipo_descuento.equals("Porcentaje")){
                                 if (valor_descuento > 0) {
-                                    cupon.codigo = code;
-                                    cupon.tipo = tipo_descuento;
-                                    cupon.valor_descuento = valor_descuento;
-                                    cupon.activo = true;
-                                    cupon.expira = fecha;
+                                    cupon.setCodigo(code);
+                                    cupon.setTipo(tipo_descuento);
+                                    cupon.setValor_descuento(valor_descuento);
+                                    cupon.setActivo(true);
+                                    cupon.setExpira(fecha);
 
                                     JOptionPane.showMessageDialog(this, "Cupón modificado con éxito.");
                                 }
@@ -367,11 +367,11 @@ public class ConsultaCupones extends javax.swing.JFrame {
                             }
                             else{
                                 if (valor_descuento > 0) {
-                                    cupon.codigo = code;
-                                    cupon.tipo = tipo_descuento;
-                                    cupon.valor_descuento = valor_descuento;
-                                    cupon.activo = true;
-                                    cupon.expira = fecha;
+                                    cupon.setCodigo(code);
+                                    cupon.setTipo(tipo_descuento);
+                                    cupon.setValor_descuento(valor_descuento);
+                                    cupon.setActivo(true);
+                                    cupon.setExpira(fecha);
 
                                     JOptionPane.showMessageDialog(this, "Cupón modificado con éxito.");
                                 }
@@ -441,14 +441,14 @@ public class ConsultaCupones extends javax.swing.JFrame {
                 
                 Cupon c = new Cupon();
                 
-                c.codigo = datosSeparadosCupon[0];
-                c.valor_descuento = Double.parseDouble(datosSeparadosCupon[1]);
+                c.setCodigo(datosSeparadosCupon[0]);
+                c.setValor_descuento(Double.parseDouble(datosSeparadosCupon[1]));
                 
                 if (datosSeparadosCupon[2].equalsIgnoreCase("Porcentaje")){
-                    c.tipo = "Porcentaje";
+                    c.setTipo("Porcentaje");
                 }
                 else{
-                    c.tipo = "Monto";
+                    c.setTipo("Monto");
                 }
                 
                 
@@ -484,8 +484,8 @@ public class ConsultaCupones extends javax.swing.JFrame {
 
                 String fechaFormateada = formatoVisible.format(fechaParseada);
                 
-                c.expira = fechaFormateada;
-                c.activo = true;
+                c.setExpira(fechaFormateada);
+                c.setActivo(true);
                 
                 Proyecto_Final_Log_In.cupones.add(c);
                 
