@@ -218,7 +218,7 @@ public class ConsultaVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void EliminarSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarSeleccionActionPerformed
-        if (Proyecto_Final_Log_In.usuarioActual.getRol().equals("Administrador")) {
+        if (VentanaAdministrador.usuarioActual.getRol().equals("Administrador") || VentanaVendedor.usuarioActual.getRol().equals("Administrador")) {
             Proyecto_Final_Log_In.itemVentaSeleccionada = jTable1.getSelectedRow();
 
             if(Proyecto_Final_Log_In.itemVentaSeleccionada >= 0){

@@ -4,7 +4,9 @@ import com.mycompany.Clases.Usuario;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
-
+    
+    public static Usuario usuarioIngresado ;
+    
     public Login() {
         initComponents();
         setLocationRelativeTo(null);
@@ -111,8 +113,8 @@ public class Login extends javax.swing.JFrame {
                         existe = true;
                         
                         //Inicializando el usuario actual, el cual indica el usuario que está accediendo.
-                        Proyecto_Final_Log_In.usuarioActual = new Usuario();
-                        Proyecto_Final_Log_In.usuarioActual = u;
+                        
+                        usuarioIngresado = u;
                         if(u.getRol().equals("Administrador")){
                             VentanaAdministrador window = new VentanaAdministrador();
                             window.setVisible(true);

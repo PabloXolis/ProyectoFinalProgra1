@@ -1,7 +1,11 @@
 package com.mycompany.Forms;
 
-public class VentanaVendedor extends javax.swing.JFrame {
+import com.mycompany.Clases.Usuario;
 
+public class VentanaVendedor extends javax.swing.JFrame {
+    
+    public static Usuario usuarioActual = Login.usuarioIngresado;
+    
     public VentanaVendedor() {
         initComponents();
         setLocationRelativeTo(null);

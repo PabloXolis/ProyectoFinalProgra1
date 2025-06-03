@@ -1,9 +1,12 @@
 package com.mycompany.Forms;
 
 import com.mycompany.Clases.Proveedor;
+import com.mycompany.Clases.Usuario;
 
 public class VentanaAdministrador extends javax.swing.JFrame {
-
+    
+    public static Usuario usuarioActual = Login.usuarioIngresado;
+    
     public VentanaAdministrador() {
         initComponents();
         setLocationRelativeTo(null);

@@ -17,7 +17,7 @@ import javax.swing.table.TableModel;
 
 public class RegistroVentas extends javax.swing.JFrame {
     // USAR HASH MAP
-    private HashMap<Libro, Integer> cantidadAModificar = new HashMap<>();
+    private HashMap<String, Integer> cantidadTemporal = new HashMap<>();
     private ArrayList<Libro_Vendido> librosSeleccionados = new ArrayList<>();
     private double total = 0;
     
@@ -388,7 +388,7 @@ public class RegistroVentas extends javax.swing.JFrame {
                     venta.setDireccion(jTextField3.getText());
                     venta.setLibrosVendidos(librosSeleccionados);
                     venta.setTotalSinIVA(venta.getTotal() / 1.12);
-                    venta.setVendedor(Proyecto_Final_Log_In.usuarioActual.getNombre());
+                    venta.setVendedor(VentanaVendedor.usuarioActual.getNombre());
 
                     SimpleDateFormat formatoFecha = new SimpleDateFormat(
                         "EEEE, d 'de' MMMM 'de' yyyy, HH:mm:ss",
@@ -405,6 +405,21 @@ public class RegistroVentas extends javax.swing.JFrame {
                                                         + "\nNIT: " + venta.getNit()
                                                         + "\nTotal sin IVA: " + venta.getTotalSinIVA()
                                                         + "\nTotal con IVA: " + venta.getTotal());
+                    
+                    for (int i = 0; i < Proyecto_Final_Log_In.libros.size(); i++) {
+                        
+                        int stock = Proyecto_Final_Log_In.libros.get(i).getCantidad();
+                        
+                        for (Libro_Vendido libroSeleccionado : librosSeleccionados) {
+                            
+                            if(libroSeleccionado.getLibro().equals(Proyecto_Final_Log_In.libros.get(i).getTitulo())){
+                                Proyecto_Final_Log_In.libros.get(i).setCantidad(cantidadTemporal.get(Proyecto_Final_Log_In.libros.get(i).getTitulo()));
+                            }
+                        }
+                        
+                    }
+                    
+                    
                     
                     //Limpiando los campos de texto.
                     Stream.of(jTextField1, jTextField2, jTextField3, jTextField4)
@@ -441,9 +456,20 @@ public class RegistroVentas extends javax.swing.JFrame {
                 throw new IllegalArgumentException("El campo no puede estar vacío o contener solo espacios.");
             }
             
+            
+            
             int cantidad = Integer.parseInt(jTextField4.getText());
             Libro libro = Proyecto_Final_Log_In.libros.get(jComboBox1.getSelectedIndex());
-
+            
+            System.out.println(cantidadTemporal);
+            System.out.println(cantidadTemporal.containsKey(libro.getTitulo()));
+            
+            if(!cantidadTemporal.containsKey(libro.getTitulo())){
+                cantidadTemporal.put(libro.getTitulo(), libro.getCantidad());
+            }
+            
+            System.out.println(cantidadTemporal.get(libro.getTitulo()) - cantidad);
+            
             if (libro == null) {
                 JOptionPane.showMessageDialog(this, "Error: El libro seleccionado no existe o no se encontró.");
             }
@@ -451,7 +477,7 @@ public class RegistroVentas extends javax.swing.JFrame {
                 if (cantidad <= 0) {
                     throw new IllegalArgumentException("La cantidad debe ser un valor positivo y no igual a cero.");
                 }
-                else if (cantidad > libro.getCantidad()){
+                else if ((cantidadTemporal.get(libro.getTitulo()) - cantidad) < 0){
                     JOptionPane.showMessageDialog(this, "La cantidad elegida sobrepasa a la que se tiene en existencia del libro " + libro.getTitulo());
                 } else {
                     Libro_Vendido lvendido = new Libro_Vendido();
@@ -461,6 +487,8 @@ public class RegistroVentas extends javax.swing.JFrame {
                     
                     total += lvendido.getSubtotal();
                     jLabel2.setText(String.valueOf(total));
+                    
+                    cantidadTemporal.replace(libro.getTitulo(),  cantidadTemporal.get(libro.getTitulo()).intValue() - cantidad);
                     
                     librosSeleccionados.add(lvendido);
                     
@@ -484,6 +512,7 @@ public class RegistroVentas extends javax.swing.JFrame {
             if(JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas eliminar el libro seleccionado?") == 0){
                 total -= librosSeleccionados.get(eliminar).getSubtotal();
                 jLabel2.setText(String.valueOf(total));
+                cantidadTemporal.replace(librosSeleccionados.get(eliminar).getLibro(), cantidadTemporal.get(librosSeleccionados.get(eliminar).getLibro()) + librosSeleccionados.get(eliminar).getCantidad());
                 librosSeleccionados.remove(eliminar);
                 pintar_tabla();
             }

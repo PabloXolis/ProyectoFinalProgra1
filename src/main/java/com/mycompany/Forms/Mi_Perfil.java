@@ -11,9 +11,9 @@ public class Mi_Perfil extends javax.swing.JFrame {
         this.setDefaultCloseOperation(Login.DISPOSE_ON_CLOSE); // Para evitar que al dar en la equis, se cierre el form principal.
         setLocationRelativeTo(null);
         
-        jLabel5.setText(Proyecto_Final_Log_In.usuarioActual.getNombre());
-        jLabel6.setText(Proyecto_Final_Log_In.usuarioActual.getUsuario());
-        jLabel7.setText(Proyecto_Final_Log_In.usuarioActual.getRol());
+        jLabel5.setText(VentanaAdministrador.usuarioActual.getNombre());
+        jLabel6.setText(VentanaAdministrador.usuarioActual.getUsuario());
+        jLabel7.setText(VentanaAdministrador.usuarioActual.getRol());
     }
 
     /**
@@ -156,8 +156,8 @@ public class Mi_Perfil extends javax.swing.JFrame {
                     // Usuario no escribió nada
                     JOptionPane.showMessageDialog(this, "Por favor, ingresa tu contraseña.");
                 }
-                else if (Proyecto_Final_Log_In.usuarioActual != null &&
-                    oldPass.equals(Proyecto_Final_Log_In.usuarioActual.getPassword())) {
+                else if (VentanaAdministrador.usuarioActual != null &&
+                    oldPass.equals(VentanaAdministrador.usuarioActual.getPassword())) {
                     wrongOld = false;
                     wrongNew = true;
                 }
@@ -231,7 +231,7 @@ public class Mi_Perfil extends javax.swing.JFrame {
                     }
 
                     if((validLength == true)&&(validNumber == true)&&(validCapital == true)&&(validLower == true)){
-                        Proyecto_Final_Log_In.usuarioActual.setPassword(newPass);
+                        VentanaAdministrador.usuarioActual.setPassword(newPass);
                         
                         wrongNew = false;
                         

@@ -23,7 +23,7 @@ public class Proyecto_Final_Log_In {
     
     public static int itemVentaSeleccionada;
     
-    public static Usuario usuarioActual;
+    
     public static Libro sellBook; //BORRAR: Solo es de prueba
     
     public static void main(String[] args) {
