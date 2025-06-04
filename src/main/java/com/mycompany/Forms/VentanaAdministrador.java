@@ -1,13 +1,13 @@
 package com.mycompany.Forms;
 
-import com.mycompany.Clases.Proveedor;
 import com.mycompany.Clases.Usuario;
 
 public class VentanaAdministrador extends javax.swing.JFrame {
     
-    public static Usuario usuarioActual = Login.usuarioIngresado;
+    public static Usuario usuarioActual;
     
     public VentanaAdministrador() {
+        usuarioActual = Login.usuarioIngresado;
         initComponents();
         setLocationRelativeTo(null);
         this.setDefaultCloseOperation(Login.DISPOSE_ON_CLOSE); // Para evitar que al dar en la equis, se cierre el form principal.
@@ -194,7 +194,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        ConsultaVentas ventana = new ConsultaVentas();
+        ConsultaVentas ventana = new ConsultaVentas(true);
         ventana.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 

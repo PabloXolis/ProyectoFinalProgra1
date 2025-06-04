@@ -12,10 +12,12 @@ import javax.swing.table.TableModel;
 public class ConsultaVentas extends javax.swing.JFrame {
     
     
-    private Venta ventaSelected;
+    public static Venta ventaSelected;
     public java.util.List<Venta> ventasActivas;
+    private boolean esAdmin;
     
-    public ConsultaVentas(){
+    public ConsultaVentas(boolean esAdmin){
+        this.esAdmin = esAdmin;
         initComponents();
         setLocationRelativeTo(null);
         this.setDefaultCloseOperation(Login.DISPOSE_ON_CLOSE); 
@@ -36,12 +38,12 @@ public class ConsultaVentas extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        regresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         EliminarSeleccion = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        detalleVenta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Consulta de Ventas");
@@ -51,13 +53,13 @@ public class ConsultaVentas extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Consulta de Ventas");
 
-        jButton2.setBackground(new java.awt.Color(0, 0, 0));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Regresar");
-        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        regresar.setBackground(new java.awt.Color(0, 0, 0));
+        regresar.setForeground(new java.awt.Color(255, 255, 255));
+        regresar.setText("Regresar");
+        regresar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        regresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                regresarActionPerformed(evt);
             }
         });
 
@@ -83,7 +85,7 @@ public class ConsultaVentas extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 18), new java.awt.Color(255, 255, 255)), "Funciones de Administrador", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 18), new java.awt.Color(255, 255, 255)), "Funciones de Administrador", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
         EliminarSeleccion.setBackground(new java.awt.Color(0, 0, 0));
         EliminarSeleccion.setForeground(new java.awt.Color(255, 255, 255));
@@ -100,25 +102,25 @@ public class ConsultaVentas extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(134, 134, 134)
                 .addComponent(EliminarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(261, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(14, 14, 14)
                 .addComponent(EliminarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jButton3.setBackground(new java.awt.Color(0, 0, 0));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Detalle de la Venta");
-        jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        detalleVenta.setBackground(new java.awt.Color(0, 0, 0));
+        detalleVenta.setForeground(new java.awt.Color(255, 255, 255));
+        detalleVenta.setText("Detalle de la Venta");
+        detalleVenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        detalleVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                detalleVentaActionPerformed(evt);
             }
         });
 
@@ -138,9 +140,9 @@ public class ConsultaVentas extends javax.swing.JFrame {
                 .addGap(249, 249, 249)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(detalleVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(71, 71, 71))
         );
         layout.setVerticalGroup(
@@ -151,16 +153,15 @@ public class ConsultaVentas extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(50, Short.MAX_VALUE))
+                            .addComponent(regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(detalleVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(17, Short.MAX_VALUE))))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -191,7 +192,7 @@ public class ConsultaVentas extends javax.swing.JFrame {
             
             for (Venta v : ventasActivas) {
                 String fechaHoraFormateada = formatoFecha.format(v.getFechaYHora().getTime());
-                Object[] fila = {v.getNombre(), v.getNit(), v.getDireccion(), v.getTotal(), v.getTotalSinIVA(), v.getVendedor(), fechaHoraFormateada};
+                Object[] fila = {v.getNombre(), v.getNit(), v.getDireccion(), v.getTotal(), Math.round(v.getTotalSinIVA()*100.0)/100.0, v.getVendedor(), fechaHoraFormateada};
                 t.addRow(fila);
             }
         }
@@ -213,19 +214,18 @@ public class ConsultaVentas extends javax.swing.JFrame {
         header.repaint();
     }
     
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_regresarActionPerformed
 
     private void EliminarSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarSeleccionActionPerformed
-        if (VentanaAdministrador.usuarioActual.getRol().equals("Administrador") || VentanaVendedor.usuarioActual.getRol().equals("Administrador")) {
+        if (esAdmin) {
             Proyecto_Final_Log_In.itemVentaSeleccionada = jTable1.getSelectedRow();
 
             if(Proyecto_Final_Log_In.itemVentaSeleccionada >= 0){
                 if(JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas eliminar la venta seleccionada?") == 0){
 
                     ventaSelected = ventasActivas.get(Proyecto_Final_Log_In.itemVentaSeleccionada);
-                    //Proyecto_Final_Log_In.libros.remove(eliminar);  Ya no se elmina de la lista de objetos de tipo Libro.
                     ventaSelected.setActivo(false);
                     pintar_tabla();
                 }
@@ -239,28 +239,28 @@ public class ConsultaVentas extends javax.swing.JFrame {
         
     }//GEN-LAST:event_EliminarSeleccionActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void detalleVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detalleVentaActionPerformed
+        Proyecto_Final_Log_In.itemVentaSeleccionada = jTable1.getSelectedRow();
         
         if(Proyecto_Final_Log_In.itemVentaSeleccionada >= 0){
-
             ventaSelected = ventasActivas.get(Proyecto_Final_Log_In.itemVentaSeleccionada);
+
             DetalleVenta ventana =  new DetalleVenta(ventaSelected);
             ventana.setVisible(true);
-            
         }
         else{
-            JOptionPane.showMessageDialog(this, "Selecciona una venta válida para eliminar.");
+            JOptionPane.showMessageDialog(this, "Selecciona una venta válida para desplegar su detalle.");
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_detalleVentaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton EliminarSeleccion;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton detalleVenta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton regresar;
     // End of variables declaration//GEN-END:variables
 }

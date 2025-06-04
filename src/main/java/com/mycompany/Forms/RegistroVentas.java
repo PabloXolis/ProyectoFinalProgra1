@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 public class RegistroVentas extends javax.swing.JFrame {
-    // USAR HASH MAP
     private HashMap<String, Integer> cantidadTemporal = new HashMap<>();
     private ArrayList<Libro_Vendido> librosSeleccionados = new ArrayList<>();
     private double total = 0;
@@ -386,7 +385,7 @@ public class RegistroVentas extends javax.swing.JFrame {
                     venta.setNit(nit);
                     venta.setNombre(jTextField2.getText());
                     venta.setDireccion(jTextField3.getText());
-                    venta.setLibrosVendidos(librosSeleccionados);
+                    venta.setLibrosVendidos(new ArrayList<>(librosSeleccionados)); //En vez de apuntar al mismo espacio de memoria de "librosSeleccionados", se crea una copia.
                     venta.setTotalSinIVA(venta.getTotal() / 1.12);
                     venta.setVendedor(VentanaVendedor.usuarioActual.getNombre());
 
@@ -408,8 +407,6 @@ public class RegistroVentas extends javax.swing.JFrame {
                     
                     for (int i = 0; i < Proyecto_Final_Log_In.libros.size(); i++) {
                         
-                        int stock = Proyecto_Final_Log_In.libros.get(i).getCantidad();
-                        
                         for (Libro_Vendido libroSeleccionado : librosSeleccionados) {
                             
                             if(libroSeleccionado.getLibro().equals(Proyecto_Final_Log_In.libros.get(i).getTitulo())){
@@ -418,8 +415,6 @@ public class RegistroVentas extends javax.swing.JFrame {
                         }
                         
                     }
-                    
-                    
                     
                     //Limpiando los campos de texto.
                     Stream.of(jTextField1, jTextField2, jTextField3, jTextField4)
@@ -456,19 +451,12 @@ public class RegistroVentas extends javax.swing.JFrame {
                 throw new IllegalArgumentException("El campo no puede estar vacío o contener solo espacios.");
             }
             
-            
-            
             int cantidad = Integer.parseInt(jTextField4.getText());
             Libro libro = Proyecto_Final_Log_In.libros.get(jComboBox1.getSelectedIndex());
-            
-            System.out.println(cantidadTemporal);
-            System.out.println(cantidadTemporal.containsKey(libro.getTitulo()));
             
             if(!cantidadTemporal.containsKey(libro.getTitulo())){
                 cantidadTemporal.put(libro.getTitulo(), libro.getCantidad());
             }
-            
-            System.out.println(cantidadTemporal.get(libro.getTitulo()) - cantidad);
             
             if (libro == null) {
                 JOptionPane.showMessageDialog(this, "Error: El libro seleccionado no existe o no se encontró.");

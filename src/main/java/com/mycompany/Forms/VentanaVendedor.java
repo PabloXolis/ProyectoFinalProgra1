@@ -31,7 +31,7 @@ public class VentanaVendedor extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Menú Vendedor");
+        setTitle("Menú de Vendedor");
 
         jLabel1.setText("¡Bienvenido Vendedor!");
 
@@ -100,7 +100,7 @@ public class VentanaVendedor extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        ConsultaVentas ventana =  new ConsultaVentas();
+        ConsultaVentas ventana =  new ConsultaVentas(false);
         ventana.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 

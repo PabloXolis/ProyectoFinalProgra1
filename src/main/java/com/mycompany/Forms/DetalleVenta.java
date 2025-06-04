@@ -15,6 +15,7 @@ public class DetalleVenta extends javax.swing.JFrame {
     private Venta venta;
     
     public DetalleVenta(Venta ventaSeleccionada) {
+        System.out.println(ventaSeleccionada);
         venta = ventaSeleccionada;
         initComponents();
         setLocationRelativeTo(null);
@@ -115,29 +116,23 @@ public class DetalleVenta extends javax.swing.JFrame {
     
     private void pintar_tabla(){
                 
-            String encabezado [] = {"Libro", "Cantidad","Subtotal", "Subtotal Sin IVA"};
+            String encabezado [] = {"Libro", "Cantidad", "Subtotal", "Subtotal Sin IVA"};
             
-            // Filtrando libros activos
-           
-            
-            // Crear modelo con columnas, pero sin filas
             DefaultTableModel t = new DefaultTableModel(encabezado, 0);
             jTable1.setModel(t);
 
             TableModel tabla = jTable1.getModel();
-            
 
             if(Proyecto_Final_Log_In.itemVentaSeleccionada >= 0){
+                System.out.println(ConsultaVentas.ventaSelected.getLibrosVendidos());
                 for (Libro_Vendido v : venta.getLibrosVendidos()) {
-                    Object[] fila = {v.getLibro(), v.getCantidad(), v.getSubtotal(), v.getSubtotal()/1.12};
+                    Object[] fila = {v.getLibro(), v.getCantidad(), v.getSubtotal(), Math.round((v.getSubtotal()/1.12)*100.0)/100.0};
                     t.addRow(fila);
                 }    
             }
             else{
                 JOptionPane.showMessageDialog(this, "Selecciona una venta válida.");
             }
-            
-            
         }
     
     private void customizeTableHeader() {
