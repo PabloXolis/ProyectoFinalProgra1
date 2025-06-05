@@ -1,11 +1,20 @@
 package com.mycompany.Forms;
 
+import com.mycompany.Clases.Libro_Vendido;
 import com.mycompany.Clases.Venta;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -44,6 +53,7 @@ public class ConsultaVentas extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         EliminarSeleccion = new javax.swing.JButton();
         detalleVenta = new javax.swing.JButton();
+        exportacionACsv = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Consulta de Ventas");
@@ -124,6 +134,16 @@ public class ConsultaVentas extends javax.swing.JFrame {
             }
         });
 
+        exportacionACsv.setBackground(new java.awt.Color(0, 0, 0));
+        exportacionACsv.setForeground(new java.awt.Color(255, 255, 255));
+        exportacionACsv.setText("Exportación de Ventas a CSV");
+        exportacionACsv.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        exportacionACsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportacionACsvActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -137,13 +157,15 @@ public class ConsultaVentas extends javax.swing.JFrame {
                 .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(249, 249, 249)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(exportacionACsv, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
                 .addComponent(detalleVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71))
+                .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,7 +179,8 @@ public class ConsultaVentas extends javax.swing.JFrame {
                         .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(detalleVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(detalleVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(exportacionACsv, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -253,10 +276,60 @@ public class ConsultaVentas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_detalleVentaActionPerformed
 
+    private String obtenerRuta(){
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        int resultado = fileChooser.showOpenDialog(null);
+
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File carpeta = fileChooser.getSelectedFile();
+            return carpeta.getAbsolutePath() + File.separator + "Reporte de Ventas.csv";
+        } else {
+            return null;
+        }
+    }
+    
+    private void exportacionACsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportacionACsvActionPerformed
+        
+        String ruta = obtenerRuta();
+        
+        if (ruta == null) {
+            JOptionPane.showMessageDialog(null, "Exportación cancelada.");
+            return;
+        }
+        
+        try (PrintWriter escribir = new PrintWriter(new FileWriter(ruta))){
+            StringBuilder contenido = new StringBuilder();
+            
+            int i = 1;
+            
+            for (Venta ventaActiva : ventasActivas) {
+                contenido.append("Venta " + i + ": , ,\n")
+                .append("Libro, Cantidad, Subtotal\n");
+                for (Libro_Vendido libroVendido : ventaActiva.getLibrosVendidos()) {
+                    contenido.append(libroVendido.getLibro())
+                    .append(", ")
+                    .append(libroVendido.getCantidad())
+                    .append(", ")
+                    .append(libroVendido.getSubtotal())
+                    .append("\n");
+                }
+                i++;
+            }
+            escribir.write(contenido.toString());
+            JOptionPane.showMessageDialog(null, "Exportación de reportes de ventas a CSV hecha con éxito en:\n" + ruta);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(ConsultaVentas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_exportacionACsvActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton EliminarSeleccion;
     private javax.swing.JButton detalleVenta;
+    private javax.swing.JButton exportacionACsv;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
