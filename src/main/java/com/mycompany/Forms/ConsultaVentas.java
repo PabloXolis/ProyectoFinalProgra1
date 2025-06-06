@@ -166,45 +166,41 @@ public class ConsultaVentas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(exportacionDetalladaACsv1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(exportacionACsv, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
+                .addGap(70, 70, 70)
                 .addComponent(detalleVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addGap(62, 62, 62)
                 .addComponent(regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(448, 448, 448)
+                .addGap(31, 31, 31))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(488, 488, 488))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel1)
-                .addGap(29, 29, 29)
+                .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(detalleVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(17, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(exportacionACsv, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(exportacionDetalladaACsv1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))))
+                        .addComponent(exportacionDetalladaACsv1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(detalleVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60))
         );
 
         pack();
@@ -212,7 +208,7 @@ public class ConsultaVentas extends javax.swing.JFrame {
     
     private void pintar_tabla(){
                 
-            String encabezado [] = {"Cliente", "NIT", "Dirección", "Total", "Total Sin IVA", "Vendedor", "Fecha"};
+            String encabezado [] = {"Cliente", "NIT", "Dirección", "Total", "Total Sin IVA", "Descuento", "Tipo de Descuento", "Vendedor", "Fecha"};
             
             // Filtrando libros activos
             ventasActivas = new java.util.ArrayList<>();
@@ -235,7 +231,8 @@ public class ConsultaVentas extends javax.swing.JFrame {
             
             for (Venta v : ventasActivas) {
                 String fechaHoraFormateada = formatoFecha.format(v.getFechaYHora().getTime());
-                Object[] fila = {v.getNombre(), v.getNit(), v.getDireccion(), v.getTotal(), Math.round(v.getTotalSinIVA()*100.0)/100.0, v.getVendedor(), fechaHoraFormateada};
+                Object[] fila = {v.getNombre(), v.getNit(), v.getDireccion(), v.getTotal(), Math.round(v.getTotalSinIVA()*100.0)/100.0, 
+                                 Math.round(v.getDescuento()*100.0)/100.0, v.getTipoDescuento(), v.getVendedor(), fechaHoraFormateada};
                 t.addRow(fila);
             }
         }
@@ -357,7 +354,7 @@ public class ConsultaVentas extends javax.swing.JFrame {
         try (PrintWriter escribir = new PrintWriter(new FileWriter(ruta))){
             StringBuilder contenido = new StringBuilder();
             
-            contenido.append("Cliente, NIT, Dirección, Total, Total Sin IVA, Vendedor, Fecha\n");
+            contenido.append("Cliente, NIT, Dirección, Total, Total Sin IVA, Descuento, Tipo de Descuento, Vendedor, Fecha\n");
             
             SimpleDateFormat formatoFecha = new SimpleDateFormat(
                 "EEEE, d 'de' MMMM 'de' yyyy, HH:mm:ss",
@@ -379,6 +376,10 @@ public class ConsultaVentas extends javax.swing.JFrame {
                 .append(", ")
                 .append(cantidadRedondeada)
                 .append(", ")       
+                .append(Math.round(ventaActiva.getDescuento()*100.0)/100.0)
+                .append(", ")  
+                .append(ventaActiva.getTipoDescuento())
+                .append(", ")  
                 .append(ventaActiva.getVendedor())
                 .append(", ")
                 .append(fechaHoraFormateada)

@@ -12,6 +12,8 @@ public class Venta implements Serializable{
     private ArrayList<Libro_Vendido> librosVendidos = new ArrayList<>();
     private double total;
     private double totalSinIVA;
+    private double descuento;
+    private String tipoDescuento;
     private String vendedor;
     private Calendar fechaYHora = Calendar.getInstance();
     private boolean activo;
@@ -140,5 +142,33 @@ public class Venta implements Serializable{
      */
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    /**
+     * @return the descuento
+     */
+    public double getDescuento() {
+        return descuento;
+    }
+
+    /**
+     * @param descuento the descuento to set
+     */
+    public void setDescuento(double descuento) {
+        this.descuento = descuento;
+    }
+
+    /**
+     * @return the tipoDescuento
+     */
+    public String getTipoDescuento() {
+        return tipoDescuento;
+    }
+
+    /**
+     * @param tipoDescuento the tipoDescuento to set
+     */
+    public void setTipoDescuento(String tipoDescuento) {
+        this.tipoDescuento = tipoDescuento;
     }
 }
