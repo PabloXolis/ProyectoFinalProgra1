@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Proyecto_Final_Log_In {
 
-    //Declarando e inicializando Arreglos.
+    //Declarando e inicializando Arreglos
     public static ArrayList<Usuario> usuarios = new ArrayList<>();
     public static ArrayList<Libro> libros = new ArrayList<>();
     public static ArrayList<Cupon> cupones = new ArrayList<>();
